@@ -1,2 +1,5 @@
 [core]
     analytics = false
+    remote = origin
+['remote "origin"']
+    url = gs://mlops-example-training-data
