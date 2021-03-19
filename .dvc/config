@@ -1,0 +1,5 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = gs://mlops-example-training-data/dvc
+    projectname = mlops-training-example
