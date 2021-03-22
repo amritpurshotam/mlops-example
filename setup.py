@@ -17,7 +17,7 @@ setup(
             "flake8-bugbear==21.3.2",
             "flake8-builtins==1.5.3",
             "flake8-comprehensions==3.4.0",
-            "isort==5.7.0",
+            "isort==5.8.0",
             "mypy==0.812",
         ],
         "test": ["pytest==6.2.2"],
