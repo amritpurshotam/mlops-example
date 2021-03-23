@@ -33,14 +33,20 @@ jobs:
 
       - name: Run experiment
         run: |
-          dvc repro
+          dvc run \
+          -n train \
+          -d src/model/train.py \
+          -d src/feature/preprocess.py \
+          -d src/data/dataset.py \
+          -o models/baseline.joblib \
+          python src/model/train.py --data_path=./data/ --model_output_path=./models/baseline.joblib
 
       - name: Commit and push to git
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add dvc.lock
-          git commit -m "Update after dvc repro"
+          git add dvc.lock dvc.yaml
+          git commit -m "Update dvc configs after a run"
           git push
 
       - name: Push to dvc
