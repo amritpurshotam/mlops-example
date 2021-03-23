@@ -27,5 +27,7 @@ jobs:
 
       - name: Test running python
         run: |
+          dvc config core.no_scm true
           dvc pull
+          ls data
           python src/train.py
