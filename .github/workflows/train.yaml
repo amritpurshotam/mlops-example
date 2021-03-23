@@ -6,7 +6,7 @@ on:
       - "*"
 
 jobs:
-  build:
+  train:
     if: github.repository == 'amritpurshotam/mlops-example'
     runs-on: self-hosted
     strategy:
