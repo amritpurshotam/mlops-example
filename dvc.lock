@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python src/model/train.py --data_path=./data/ --model_output_path=./models/baseline.joblib
+    deps:
+    - path: src/data/dataset.py
+      md5: efe7ca6351d3cc02f5cce14ca8379baf
+      size: 3446
+    - path: src/feature/preprocess.py
+      md5: 3796bb3e6dd606a525adf9e6a0ecce44
+      size: 1627
+    - path: src/model/train.py
+      md5: 1351e02b45f4fc3513ccc27c8779a714
+      size: 954
+    outs:
+    - path: models/baseline.joblib
+      md5: 04bdcf092b1f9e592ebb07cdf1ca7589
+      size: 40329
