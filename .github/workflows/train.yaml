@@ -26,9 +26,23 @@ jobs:
           python -m pip install --upgrade pip setuptools
           pip install -e .
 
-      - name: Test running python
+      - name: Update data
         run: |
           dvc config core.no_scm true
           dvc pull
-          ls data
-          python src/train.py
+
+      - name: Run experiment
+        run: |
+          dvc repro
+
+      - name: Commit and push to git
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add dvc.lock
+          git commit -m "Update after dvc repro"
+          git push
+
+      - name: Push to dvc
+        run: |
+          dvc push
