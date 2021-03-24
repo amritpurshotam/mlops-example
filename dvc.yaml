@@ -1,0 +1,9 @@
+stages:
+  train:
+    cmd: python src/model/train.py --data_path=./data/ --model_output_path=./models/baseline.joblib
+    deps:
+    - src/data/dataset.py
+    - src/feature/preprocess.py
+    - src/model/train.py
+    outs:
+    - models/baseline.joblib
