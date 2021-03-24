@@ -37,6 +37,8 @@ jobs:
         run: |
           dvc run \
           -n train \
+          --force \
+          -p train.n_estimators,train.max_depth \
           -d src/model/train.py \
           -d src/feature/preprocess.py \
           -d src/data/dataset.py \
