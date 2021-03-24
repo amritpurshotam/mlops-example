@@ -15,8 +15,8 @@ stages:
     params:
       params.yaml:
         train.max_depth: 5
-        train.n_estimators: 10
+        train.n_estimators: 8
     outs:
     - path: models/baseline.joblib
-      md5: e53b7deb09ffeca9bddbd19f318851db
-      size: 67279
+      md5: 93f0919f3423c407face8c1054fd0679
+      size: 57011
