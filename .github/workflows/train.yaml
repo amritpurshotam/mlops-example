@@ -43,6 +43,7 @@ jobs:
           -d src/model/train.py \
           -d src/feature/preprocess.py \
           -d src/data/dataset.py \
+          -M scores.json \
           -o models/baseline.joblib \
           python src/model/train.py --data_path=./data/ --model_output_path=./models/baseline.joblib
 
