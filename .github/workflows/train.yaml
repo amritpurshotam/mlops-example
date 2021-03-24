@@ -32,6 +32,7 @@ jobs:
         run: |
           dvc config core.no_scm true
           dvc pull
+          dvc config core.no_scm false
 
       - name: Run experiment
         run: |

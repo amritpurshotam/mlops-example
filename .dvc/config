@@ -1,6 +1,6 @@
 [core]
     remote = storage
-    no_scm = true
+    no_scm = false
 ['remote "storage"']
     url = gs://mlops-example-training-data/dvc
     projectname = mlops-training-example
