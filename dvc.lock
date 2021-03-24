@@ -10,13 +10,16 @@ stages:
       md5: 3796bb3e6dd606a525adf9e6a0ecce44
       size: 1627
     - path: src/model/train.py
-      md5: 567e9a886101c9b7dd15269cc22ba4d6
-      size: 1132
+      md5: 872ed17ba6852726297ecd8b9d2d01d6
+      size: 1812
     params:
       params.yaml:
         train.max_depth: 5
-        train.n_estimators: 8
+        train.n_estimators: 5
     outs:
     - path: models/baseline.joblib
-      md5: 93f0919f3423c407face8c1054fd0679
-      size: 57011
+      md5: 45e569e25acff5984f9bd5c472272f2b
+      size: 41449
+    - path: scores.json
+      md5: d6007d046465faf7b201637120d89801
+      size: 38
