@@ -30,7 +30,7 @@ def evaluate(features: DataFrame, labels: DataFrame) -> None:
     model = create_model()
     pipeline = create_pipeline(model)
 
-    cv = StratifiedKFold(n_splits=5, random_state=42)
+    cv = StratifiedKFold(n_splits=5)
     scores = cross_val_score(
         pipeline, features, labels, cv=cv, scoring="balanced_accuracy", n_jobs=-1
     )
