@@ -1,4 +1,5 @@
 import click
+import yaml
 from joblib import dump
 from pandas import DataFrame
 from sklearn.ensemble import RandomForestClassifier
@@ -9,7 +10,14 @@ from src.feature.preprocess import create_pipeline
 
 
 def train(features: DataFrame, labels: DataFrame) -> Pipeline:
-    model = RandomForestClassifier(n_estimators=5, max_depth=5, n_jobs=-1)
+    with open("params.yaml", "r") as fd:
+        params = yaml.safe_load(fd)
+
+    model = RandomForestClassifier(
+        n_estimators=params["train"]["n_estimators"],
+        max_depth=params["train"]["max_depth"],
+        n_jobs=-1,
+    )
     pipeline = create_pipeline(model)
     pipeline.fit(features, labels)
     return pipeline

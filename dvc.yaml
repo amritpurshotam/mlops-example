@@ -7,3 +7,6 @@ stages:
     - src/model/train.py
     outs:
     - models/baseline.joblib
+    params:
+    - train.max_depth
+    - train.n_estimators
