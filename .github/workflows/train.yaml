@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
@@ -36,13 +37,11 @@ jobs:
 
       - name: Comment results on pull request
         run: |
-          metrics=$(dvc metrics diff --show-md ${{ github.event.pull_request.base.ref }})
+          metrics=$(dvc metrics diff --show-md main
           echo '*********** printing out metrics ************'
           echo $metrics
           echo '*********************************************'
           curl -X POST \
-          --trace \
-          -i \
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
           https://api.github.com/repos/amritpurshotam/mlops-example/issues/${{github.event.number}}/comments \
