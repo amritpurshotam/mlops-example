@@ -37,12 +37,10 @@ jobs:
 
       - name: Comment results on pull request
         run: |
-          metrics=$(dvc metrics diff --show-md main)
-          echo '*********** printing out metrics ************'
-          echo $metrics
-          echo '*********************************************'
+          dvc metrics diff --show-md main > metrics.txt
+          metrics=$(sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' metrics.txt)
           curl -X POST \
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
           https://api.github.com/repos/amritpurshotam/mlops-example/issues/${{github.event.number}}/comments \
-          --data-urlencode '{"body":"'"$metrics"'"}'
+          -d '{"body":"'"$metrics"'"}'
