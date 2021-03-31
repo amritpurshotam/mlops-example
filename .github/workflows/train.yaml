@@ -41,6 +41,8 @@ jobs:
           echo $metrics
           echo '*********************************************'
           curl -X POST \
+          --trace \
+          -i \
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
           https://api.github.com/repos/amritpurshotam/mlops-example/issues/${{github.event.number}}/comments \
