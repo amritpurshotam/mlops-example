@@ -37,7 +37,7 @@ jobs:
 
       - name: Comment results on pull request
         run: |
-          metrics=$(dvc metrics diff --show-md main
+          metrics=$(dvc metrics diff --show-md main)
           echo '*********** printing out metrics ************'
           echo $metrics
           echo '*********************************************'
