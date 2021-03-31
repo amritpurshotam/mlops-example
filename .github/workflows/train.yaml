@@ -44,4 +44,4 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
           https://api.github.com/repos/amritpurshotam/mlops-example/issues/${{github.event.number}}/comments \
-          -d '{"body":"'"$metrics"'"}'
+          --data-urlencode '{"body":"'"$metrics"'"}'
