@@ -35,12 +35,37 @@ jobs:
           dvc pull
           dvc config core.no_scm false
 
+      - name: Run experiment
+        run: |
+          dvc run \
+          -n train \
+          --force \
+          -p train.n_estimators,train.max_depth \
+          -d src/model/train.py \
+          -d src/feature/preprocess.py \
+          -d src/data/dataset.py \
+          -M scores.json \
+          -o models/baseline.joblib \
+          python src/model/train.py --data_path=./data/ --model_output_path=./models/baseline.joblib
+
+      - name: Commit and push to git
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -A
+          git commit -m "Update after a dvc run"
+          git push
+
+      - name: Push to dvc
+        run: |
+          dvc push
+
       - name: Comment results on pull request
         run: |
           echo "## Workspace vs. Main" >> report.txt
           echo "### Performance" >> report.txt
           dvc metrics diff --show-md main >> report.txt
-          echo "### Workspace vs. Main Params" >> report.txt
+          echo "### Params" >> report.txt
           dvc params diff --show-md main >> report.txt
           report=$(sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' report.txt)
           curl -X POST \
