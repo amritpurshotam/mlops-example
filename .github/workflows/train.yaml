@@ -66,8 +66,11 @@ jobs:
           echo "### Params" >> report.txt
           dvc params diff --show-md main >> report.txt
           report=$(sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' report.txt)
+
+          sha=$(git rev-parse @~)
+
           curl -X POST \
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: token ${{ github.token }}" \
-          https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments \
+          https://api.github.com/repos/${{ github.repository }}/commits/$sha/comments \
           -d '{"body":"'"$report"'"}'
