@@ -65,8 +65,8 @@ def _align_features_and_labels(
 def _split(
     features: DataFrame, labels: DataFrame, random_state: int = 42
 ) -> Tuple[DataFrame, DataFrame, DataFrame, DataFrame, DataFrame, DataFrame]:
-    """Deterministic random 80/10/10 train/val/test split of the dataset stratified by the
-    labels.
+    """Deterministic random 80/10/10 train/val/test split of the dataset stratified by
+    the labels.
 
     Parameters
     ----------
