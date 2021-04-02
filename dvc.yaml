@@ -13,3 +13,6 @@ stages:
     metrics:
     - scores.json:
         cache: false
+    plots:
+    - cm.csv:
+        cache: false

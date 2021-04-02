@@ -4,22 +4,25 @@ stages:
     cmd: python src/model/train.py --data_path=./data/ --model_output_path=./models/baseline.joblib
     deps:
     - path: src/data/dataset.py
-      md5: efe7ca6351d3cc02f5cce14ca8379baf
-      size: 3446
+      md5: c38fc08a5849d7be63b417dee0c6420e
+      size: 3718
     - path: src/feature/preprocess.py
       md5: 3796bb3e6dd606a525adf9e6a0ecce44
       size: 1627
     - path: src/model/train.py
-      md5: 872ed17ba6852726297ecd8b9d2d01d6
-      size: 1812
+      md5: 4ff81e146bcb513d5266f3c08731833b
+      size: 1907
     params:
       params.yaml:
         train.max_depth: 5
         train.n_estimators: 15
     outs:
+    - path: cm.csv
+      md5: 1c7e885ef25e3bb9c85e45075891ce96
+      size: 150225
     - path: models/baseline.joblib
-      md5: 0d63f4e052e50bc65af608b2007a2077
-      size: 90709
+      md5: 7ed48286d1ac3aa4b755a5628b93d5ec
+      size: 95349
     - path: scores.json
-      md5: ca8576347b0464db616ec262c703ecaa
-      size: 38
+      md5: f51a1ed74add5f290e6099c91a0385cf
+      size: 36

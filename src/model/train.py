@@ -1,13 +1,13 @@
 import json
 
 import click
-import numpy as np
+import pandas as pd
+import sklearn.metrics as metrics
 import yaml
 from joblib import dump
 from pandas import DataFrame
 from sklearn.base import BaseEstimator
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import StratifiedKFold, cross_val_score
 from sklearn.pipeline import Pipeline
 
 from src.data.dataset import load_dataset
@@ -26,18 +26,15 @@ def create_model() -> BaseEstimator:
     return model
 
 
-def evaluate(features: DataFrame, labels: DataFrame) -> None:
-    model = create_model()
-    pipeline = create_pipeline(model)
-
-    cv = StratifiedKFold(n_splits=5)
-    scores = cross_val_score(
-        pipeline, features, labels, cv=cv, scoring="balanced_accuracy", n_jobs=-1
-    )
-
-    bal_acc = np.average(scores)
+def evaluate(pipeline: Pipeline, features: DataFrame, labels: DataFrame) -> None:
+    predictions = pipeline.predict(features)
+    bal_acc = metrics.balanced_accuracy_score(labels, predictions)
     with open("scores.json", "w") as fd:
         json.dump({"bal_acc": bal_acc}, fd, indent=4)
+
+    actual = pd.DataFrame(labels.values, columns=["actual"])
+    predictions = pd.DataFrame(predictions, columns=["predictions"])
+    pd.concat([actual, predictions], axis=1).to_csv("cm.csv", index=False)
 
 
 def train(features: DataFrame, labels: DataFrame) -> Pipeline:
@@ -56,9 +53,11 @@ def train(features: DataFrame, labels: DataFrame) -> Pipeline:
     help="Path to save the trained model.",
 )
 def run(data_path: str, model_output_path: str):
-    train_features, _, train_labels, _ = load_dataset(data_path)
-    evaluate(train_features, train_labels)
+    train_features, val_features, _, train_labels, val_labels, _ = load_dataset(
+        data_path
+    )
     pipeline = train(train_features, train_labels)
+    evaluate(pipeline, val_features, val_labels)
     dump(pipeline, model_output_path)
 
 

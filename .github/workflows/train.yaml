@@ -45,6 +45,7 @@ jobs:
           -d src/feature/preprocess.py \
           -d src/data/dataset.py \
           -M scores.json \
+          --plots-no-cache cm.csv \
           -o models/baseline.joblib \
           python src/model/train.py --data_path=./data/ --model_output_path=./models/baseline.joblib
 

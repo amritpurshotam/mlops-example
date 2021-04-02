@@ -63,9 +63,9 @@ def _align_features_and_labels(
 
 
 def _split(
-    features: DataFrame, labels: DataFrame
-) -> Tuple[DataFrame, DataFrame, DataFrame, DataFrame]:
-    """Deterministic random 90/10 train/test split of the dataset stratified by the
+    features: DataFrame, labels: DataFrame, random_state: int = 42
+) -> Tuple[DataFrame, DataFrame, DataFrame, DataFrame, DataFrame, DataFrame]:
+    """Deterministic random 80/10/10 train/val/test split of the dataset stratified by the
     labels.
 
     Parameters
@@ -81,12 +81,30 @@ def _split(
         testing features, training labels, and testing labels respectively.
     """
     train_features, test_features, train_labels, test_labels = train_test_split(
-        features, labels, test_size=0.1, random_state=42, stratify=labels
+        features, labels, test_size=0.2, random_state=random_state, stratify=labels
     )
-    return train_features, test_features, train_labels, test_labels
+
+    val_features, test_features, val_labels, test_labels = train_test_split(
+        test_features,
+        test_labels,
+        test_size=0.5,
+        random_state=random_state,
+        stratify=test_labels,
+    )
+
+    return (
+        train_features,
+        val_features,
+        test_features,
+        train_labels,
+        val_labels,
+        test_labels,
+    )
 
 
-def load_dataset(data_dir: str) -> Tuple[DataFrame, DataFrame, DataFrame, DataFrame]:
+def load_dataset(
+    data_dir: str,
+) -> Tuple[DataFrame, DataFrame, DataFrame, DataFrame, DataFrame, DataFrame]:
     """Read in the water pump dataset and split into the training and test sets.
 
     Parameters
@@ -103,6 +121,5 @@ def load_dataset(data_dir: str) -> Tuple[DataFrame, DataFrame, DataFrame, DataFr
     """
     features, labels = _read_in_raw_data(data_dir)
     features, labels = _align_features_and_labels(features, labels)
-    train_features, test_features, train_labels, test_labels = _split(features, labels)
 
-    return train_features, test_features, train_labels, test_labels
+    return _split(features, labels)
