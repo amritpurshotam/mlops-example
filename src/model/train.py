@@ -34,7 +34,7 @@ def evaluate(pipeline: Pipeline, features: DataFrame, labels: DataFrame) -> None
 
     actual = pd.DataFrame(labels.values, columns=["actual"])
     predictions = pd.DataFrame(predictions, columns=["predictions"])
-    pd.concat([actual, predictions]).to_csv("cm.csv", index=False)
+    pd.concat([actual, predictions], axis=1).to_csv("cm.csv", index=False)
 
 
 def train(features: DataFrame, labels: DataFrame) -> Pipeline:
