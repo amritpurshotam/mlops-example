@@ -18,8 +18,8 @@ stages:
         train.n_estimators: 15
     outs:
     - path: models/baseline.joblib
-      md5: 898b06d761bc2de7f319c26cfc1a1833
-      size: 91989
+      md5: 5d0fb539879984a2c7701b1a99796306
+      size: 92469
     - path: scores.json
-      md5: ef247222c118eb1af59fe94e675d6a58
-      size: 38
+      md5: 320c179648a8603823aa85d609af9deb
+      size: 37
