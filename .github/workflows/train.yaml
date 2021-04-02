@@ -68,6 +68,5 @@ jobs:
           report=$(sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' report.txt)
           curl -X POST \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
-          https://api.github.com/repos/amritpurshotam/mlops-example/issues/${{github.event.number}}/comments \
+          -H "Authorization: token ${{ github.token }}" \
           -d '{"body":"'"$report"'"}'
