@@ -78,7 +78,7 @@ jobs:
           echo "### Params" >> report.txt
           dvc params diff --show-md main >> report.txt
           echo "### Plots" >> report.txt
-          echo "![image](https://storage.googleapis.com/mlops-example-training-data/plots/$uuid.png)"
+          echo "![image](https://storage.googleapis.com/mlops-example-training-data/plots/$uuid.png)" >> report.txt
           report=$(sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' report.txt)
 
           sha=$(git rev-parse @~)
