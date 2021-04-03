@@ -41,14 +41,32 @@ jobs:
           dvc pull
           dvc config core.no_scm false
 
+      - name: Run experiment
+        run: |
+          dvc run \
+          -n train \
+          --force \
+          -p train.n_estimators,train.max_depth \
+          -d src/model/train.py \
+          -d src/feature/preprocess.py \
+          -d src/data/dataset.py \
+          -M scores.json \
+          --plots cm.csv \
+          -o models/baseline.joblib \
+          python src/model/train.py --data_path=./data/ --model_output_path=./models/baseline.joblib
+
+      - name: Commit and push to git
+        run: |
+          git add -A
+          git commit -m "Update after a dvc run"
+          git push
+
+      - name: Push to dvc
+        run: |
+          dvc push
+
       - name: Comment results on pull request
         run: |
-          echo "**********************************"
-          echo $(fc-list)
-          echo "**********************************"
-          echo $(fc-match sans-serif)
-          echo "**********************************"
-
           dvc plots diff -t confusion --targets cm.csv -x actual -y predictions --show-vega -- main > cm.json
           uuid=$(uuidgen)
           vl2png cm.json -s 1.3 > $uuid.png
