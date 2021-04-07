@@ -1,5 +1,6 @@
 dvc[gs]==2.0.16
-numpy==1.20.2
-pandas==1.2.3
-scikit-learn==0.24.1
+joblib==0.14.1
+numpy==1.18.4
+pandas==0.25.3
+scikit-learn==0.21.3
 wandb==0.10.24

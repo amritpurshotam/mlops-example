@@ -50,6 +50,7 @@ jobs:
           -d src/model/train.py \
           -d src/feature/preprocess.py \
           -d src/data/dataset.py \
+          -d requirements.txt \
           -M scores.json \
           --plots cm.csv \
           -o models/baseline.joblib \
